@@ -83,7 +83,7 @@ function TransactionItems({
               ([date, { transactions, amount }]) => (
                 <div
                   key={date}
-                  className="dark:bg-primary-foreground bg-secondary hover:bg-primary-foreground rounded-md p-4 shadow-md transition-all duration-300 ease-in-out"
+                  className="dark:bg-primary-foreground bg-secondary rounded-md p-4 shadow-md transition-all duration-300 ease-in-out"
                 >
                   <TransactionSummaryItem date={date} amount={amount} />
                   <div className="space-y-1">

@@ -31,7 +31,7 @@ function SubmitButton({
       disabled={pending}
       size={size}
     >
-      {pending ? <Loader2Icon className="animate-spin" /> : children}
+      {pending ? <Loader2Icon className="w-full animate-spin" /> : children}
     </Button>
   );
 }

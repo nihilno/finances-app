@@ -14,7 +14,7 @@ function Summary({ range }: { range: string }) {
     <>
       <div className="flex items-center justify-between">
         <MainTitle>Summary</MainTitle>
-        <Range />
+        <Range range={range} />
       </div>
       <div className="-mt-4 grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-4 lg:gap-8">
         {types.map((type) => (

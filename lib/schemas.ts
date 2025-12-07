@@ -1,5 +1,5 @@
 import z from "zod";
-import { categories, types } from "./consts";
+import { categories, dateRangeValues, types } from "./consts";
 
 export const transactionSchema = z
   .object({
@@ -29,3 +29,13 @@ export const transactionSchema = z
   );
 
 export type transactionType = z.input<typeof transactionSchema>;
+
+export const settingsSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Name must be at least 2 characters long." })
+    .max(64, { message: "Name must be below 64 characters." }),
+  defaultView: z.enum(dateRangeValues, {
+    message: "Please, select a Default View.",
+  }),
+});

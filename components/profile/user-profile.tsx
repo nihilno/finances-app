@@ -9,26 +9,30 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@supabase/supabase-js";
-import { Settings, User2, UserPlus } from "lucide-react";
+import { UserPlus, UserRoundPen } from "lucide-react";
 import Link from "next/link";
+import UserAvatar from "./user-avatar";
 
 function UserProfile({ user }: { user: User | null }) {
   return user ? (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <User2 />
+          <UserAvatar />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>{user?.email || "My account"}</DropdownMenuLabel>
+      <DropdownMenuContent className="w-35 px-2">
+        <DropdownMenuLabel>
+          {user.user_metadata.fullName
+            ? `Hi, ${user.user_metadata.fullName}`
+            : "My account"}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="settings" className="flex items-center gap-2">
-            <Settings className="text-foreground" /> Settings
+          <Link href="settings/profile" className="flex items-center gap-2">
+            <UserRoundPen className="text-foreground" /> Profile
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <SignOut />
         </DropdownMenuItem>

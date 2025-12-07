@@ -124,7 +124,18 @@
     scrollbar-gutter: stable both-edges;
   }
 
+  img,
+  svg {
+    user-select: none;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  @media (max-width: 375px) {
+    .layout {
+      flex-direction: column;
+    }
   }
 }

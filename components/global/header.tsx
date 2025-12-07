@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { DollarSign, PiggyBank } from "lucide-react";
 import Link from "next/link";
+import UserProfile from "../profile/user-profile";
 import { ModeToggle } from "./mode-toggle";
-import UserProfile from "./user-profile";
 
 async function Header() {
   const supabase = await createClient();
@@ -12,12 +12,12 @@ async function Header() {
 
   return (
     <header className="border-muted-foreground/40 bg-background sticky top-0 z-50 flex items-center justify-between border-b border-dashed py-6">
-      <Link href="/" className="flex items-center gap-3">
+      <Link href="/" className="flex items-center gap-1 sm:gap-3">
         <div className="relative">
-          <PiggyBank className="h-10 w-10" />
+          <PiggyBank className="h-8 w-8 sm:h-10 sm:w-10" />
           <div className="absolute -top-1 -right-1">
             <div className="bg-primary text-secondary rounded-full p-1.5 shadow-lg">
-              <DollarSign className="h-4 w-4" strokeWidth={3} />
+              <DollarSign className="h-2 w-2 sm:h-4 sm:w-4" strokeWidth={3} />
             </div>
           </div>
         </div>

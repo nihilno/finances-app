@@ -22,7 +22,7 @@ function Trend({ type, amount, prevAmount }: TrendProps) {
   );
 
   return (
-    <div className="dark:bg-primary-foreground bg-secondary dark:hover:bg-primary-foreground flex h-40 cursor-default flex-col items-center justify-center gap-2 space-y-1 rounded-md shadow-md transition-all duration-300 ease-in-out hover:shadow-md sm:h-50 md:h-40 lg:h-50">
+    <div className="dark:bg-primary-foreground bg-secondary dark:hover:bg-primary-foreground/60 hover:bg-primary-foreground flex h-40 cursor-default flex-col items-center justify-center gap-2 space-y-1 rounded-md shadow-md transition-all duration-300 ease-in-out hover:shadow-md sm:h-50 md:h-40 lg:h-50">
       <div
         className={cn(
           "text-xl font-bold capitalize md:text-lg xl:text-xl",
