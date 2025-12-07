@@ -79,7 +79,7 @@ async function seed() {
   let transactions = [];
   let lastDate = null;
 
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 50; i++) {
     // 50% chance to use the same date as the previous transaction
     const reuseDate = lastDate && Math.random() < 0.5;
     const created_at = reuseDate ? lastDate : faker.date.past();

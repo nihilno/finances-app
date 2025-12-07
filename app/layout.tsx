@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={(cn(inter.className), "text-sm md:text-base")}>
+      <body className={cn(inter.className, "text-sm md:text-base")}>
         <Providers>
           <div
             className={cn(

@@ -1,6 +1,6 @@
+import { TransactionItemsSkeleton } from "@/components/skeletons/transaction-skeletons";
 import { fetchTransactions } from "@/lib/actions";
 import { Suspense } from "react";
-import { TransactionItemsSkeleton } from "../skeletons/transaction-skeletons";
 import TransactionItems from "./transaction-items";
 
 async function TransactionListWrapper({ range }: { range: string }) {

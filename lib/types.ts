@@ -34,3 +34,8 @@ export type TransactionSummaryItemProps = {
 export type EditPageProps = {
   params: { id: string };
 };
+
+export type LoginState = {
+  message: string;
+  error: boolean;
+};

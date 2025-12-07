@@ -36,12 +36,16 @@ function TransactionItem({
   if (!id) notFound();
 
   return (
-    <div className="hover:bg-primary/10 dark:hover:bg-secondary flex w-full cursor-default items-center rounded-sm transition-all duration-300 ease-in-out">
+    <div className="hover:bg-primary/10 flex w-full cursor-default items-center rounded-sm transition-all duration-300 ease-in-out">
       <div className="mr-4 flex grow items-center">
-        <IconComponent className={cn(colors, "mx-2 hidden h-5 w-5 sm:block")} />
-        <span>{description}</span>
+        <IconComponent
+          className={cn(colors, "mr-2 h-3 w-3 sm:block sm:h-5 sm:w-5")}
+        />
+        <span className="line-clamp-1 first-letter:capitalize">
+          {description}
+        </span>
       </div>
-      <div className="mr-4 hidden min-w-[150px] items-center md:flex">
+      <div className="mr-4 hidden min-w-[150px] items-center sm:flex">
         {category && <Badge>{category}</Badge>}
       </div>
 

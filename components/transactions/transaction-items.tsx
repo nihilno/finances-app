@@ -11,7 +11,7 @@ import { useState } from "react";
 import TransactionItem from "./transaction-item";
 import TransactionSummaryItem from "./transaction-summary-item";
 
-export default function TransactionItems({
+function TransactionItems({
   initialTransactions,
   range,
 }: {
@@ -47,26 +47,26 @@ export default function TransactionItems({
 
   return (
     <div className="mt-16 px-4 py-8">
-      <div className="pb-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold md:text-2xl">
+      <div className="flex items-center justify-between pb-4">
+        <div className="flex flex-col justify-between gap-1">
+          <h2 className="line-clamp-1 text-xl font-semibold md:text-2xl">
             Recent Transactions
           </h2>
-          <Link href="/transaction/add" className="w-20">
-            <Button className="flex w-full items-center" size="sm">
-              <Plus className="h-4 w-4" />
-              <span>Add</span>
-            </Button>
-          </Link>
+          <span className="text-muted-foreground text-sm">
+            Total ({transactions.length})
+          </span>
         </div>
-        <span className="text-muted-foreground text-sm">
-          Total ({transactions.length})
-        </span>
+        <Link href="/transaction/add" className="w-20">
+          <Button className="flex w-full items-center" size="sm">
+            <Plus className="h-4 w-4" />
+            <span>Add</span>
+          </Button>
+        </Link>
       </div>
 
       <ScrollArea className="h-140 border-t border-b py-4">
         {Object.keys(groupedTransactions).length === 0 ? (
-          <div className="text-muted-foreground dark:bg-primary-foreground/80 bg-secondary absolute inset-0 flex flex-col items-center justify-center gap-5 text-center">
+          <div className="text-muted-foreground dark:bg-primary-foreground bg-secondary absolute inset-0 flex flex-col items-center justify-center gap-5 text-center">
             <BanknoteArrowUp className="h-16 w-16 animate-pulse md:h-24 md:w-24" />
             No transactions match your current filters. <br /> Add your first
             one to get started.
@@ -83,12 +83,12 @@ export default function TransactionItems({
               ([date, { transactions, amount }]) => (
                 <div
                   key={date}
-                  className="dark:bg-primary-foreground/80 bg-secondary hover:bg-primary-foreground rounded-md p-4 transition-all duration-300 ease-in-out"
+                  className="dark:bg-primary-foreground bg-secondary hover:bg-primary-foreground rounded-md p-4 shadow-md transition-all duration-300 ease-in-out"
                 >
                   <TransactionSummaryItem date={date} amount={amount} />
                   <div className="space-y-1">
-                    {transactions.map((transaction) => (
-                      <TransactionItem key={transaction.id} {...transaction} />
+                    {transactions.map((transaction, index) => (
+                      <TransactionItem key={index} {...transaction} />
                     ))}
                   </div>
                 </div>
@@ -118,3 +118,5 @@ export default function TransactionItems({
     </div>
   );
 }
+
+export default TransactionItems;

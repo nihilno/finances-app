@@ -1,8 +1,10 @@
-import { supabase } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { TrendsProps } from "@/lib/types";
 import Trend from "./trend";
 
-export default async function Trends({ type, range }: TrendsProps) {
+async function Trends({ type, range }: TrendsProps) {
+  const supabase = await createClient();
+
   const { data, error } = await supabase.rpc("calculate_total", {
     type_arg: type,
     range_arg: range,
@@ -19,3 +21,5 @@ export default async function Trends({ type, range }: TrendsProps) {
     />
   );
 }
+
+export default Trends;

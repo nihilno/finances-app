@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TransactionAddPage() {
   return (
-    <section className="mt-12 flex flex-col items-center space-y-6">
+    <section className="flex flex-col items-center space-y-6">
       <MainTitle>Add Transaction</MainTitle>
       <TransactionForm />
     </section>

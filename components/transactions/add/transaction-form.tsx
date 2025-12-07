@@ -76,7 +76,7 @@ function TransactionForm({
         className="flex w-full flex-col items-center"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="dark:bg-primary-foreground/80 bg-secondary grid w-full max-w-120 grid-cols-1 gap-4 rounded-md p-4">
+        <div className="dark:bg-primary-foreground bg-secondary grid w-full max-w-120 grid-cols-1 gap-4 rounded-md px-4 py-8">
           <FormField
             control={form.control}
             name="type"
@@ -121,7 +121,7 @@ function TransactionForm({
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="mb-1">Category</FormLabel>
+                <FormLabel className="mb-1">Expesne Category</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   value={field.value}
