@@ -28,12 +28,12 @@ function UserProfile({ user }: { user: User | null }) {
             : "My account"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href="settings/profile" className="flex items-center gap-2">
             <UserRoundPen className="text-foreground" /> Profile
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <SignOut />
         </DropdownMenuItem>
       </DropdownMenuContent>
