@@ -1,4 +1,3 @@
-// app/(auth)/auth/confirm/route.ts
 import { createClient } from "@/lib/supabase/server";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,7 +10,6 @@ export async function GET(request: NextRequest) {
   const redirectTo = url.searchParams.get("redirect_to") ?? "/";
 
   if (!token || !type || !email) {
-    // missing params → redirect to error
     return NextResponse.redirect(new URL("/error", request.url));
   }
 
@@ -28,7 +26,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/error", request.url));
     }
 
-    // Successful — redirect user
     const redirectUrl = new URL(redirectTo, request.url);
     return NextResponse.redirect(redirectUrl);
   } catch (err) {

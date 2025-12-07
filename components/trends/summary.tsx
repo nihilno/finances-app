@@ -1,7 +1,7 @@
+import MainTitle from "@/components/global/titles";
 import { types } from "@/lib/consts";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import MainTitle from "../global/titles";
 import {
   TrendsErrorSkeleton,
   TrendsSkeleton,

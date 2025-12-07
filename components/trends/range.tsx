@@ -1,7 +1,7 @@
 "use client";
 
+import DateRangeSelect from "@/components/global/date-range-select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import DateRangeSelect from "../global/date-range-select";
 
 function Range({ range }: { range: string }) {
   const searchParams = useSearchParams();

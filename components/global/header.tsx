@@ -1,7 +1,7 @@
+import UserProfile from "@/components/profile/user-profile";
 import { createClient } from "@/lib/supabase/server";
 import { DollarSign, PiggyBank } from "lucide-react";
 import Link from "next/link";
-import UserProfile from "../profile/user-profile";
 import { ModeToggle } from "./mode-toggle";
 
 async function Header() {

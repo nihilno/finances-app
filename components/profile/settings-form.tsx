@@ -1,13 +1,13 @@
 "use client";
 
 import SubmitButton from "@/components/auth/submit-button";
+import DateRangeSelect from "@/components/global/date-range-select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateSettings } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { User } from "@supabase/supabase-js";
 import { useActionState } from "react";
-import DateRangeSelect from "../global/date-range-select";
 
 function SettingsForm({ user }: { user: User | null }) {
   const [state, formAction] = useActionState(updateSettings, {
