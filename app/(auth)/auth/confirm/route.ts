@@ -13,6 +13,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    url.searchParams.delete("redirect_to");
+
     const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({
       email,
