@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/error", process.env.APP_URL));
     }
 
-    return NextResponse.redirect(new URL("/dashboard", process.env.APP_URL));
+    return NextResponse.redirect(new URL("/", process.env.APP_URL));
   } catch (err) {
     console.error("Unexpected error in confirm handler:", err);
     return NextResponse.redirect(new URL("/error", process.env.APP_URL));
