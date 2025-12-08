@@ -93,6 +93,7 @@ export async function login(
     email,
     options: {
       shouldCreateUser: true,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/confirm`,
     },
   });
 
