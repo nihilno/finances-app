@@ -16,11 +16,12 @@ export async function GET(request: NextRequest) {
     url.searchParams.delete("redirect_to");
 
     const supabase = await createClient();
-    const { error } = await supabase.auth.verifyOtp({
+    const { data, error } = await supabase.auth.verifyOtp({
       email,
       token,
       type,
     });
+    console.log("verifyOtp result:", { data, error });
 
     if (error) {
       console.error("Supabase verifyOtp error:", error);
