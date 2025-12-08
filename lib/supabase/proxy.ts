@@ -4,7 +4,6 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // ✅ Let the confirmation request pass without touching Supabase
   if (pathname.startsWith("/auth/confirm")) {
     return NextResponse.next();
   }

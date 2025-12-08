@@ -122,56 +122,79 @@ export async function uploadAvatar(formData: FormData): Promise<void> {
   if (!(file instanceof File) || file.size === 0) return;
 
   const fileExt = file.name.split(".").pop();
+  if (!fileExt) throw new Error("Invalid file name; missing extension.");
+
   const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
-  const { error } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from("avatars")
     .upload(fileName, file);
 
-  if (error) {
+  if (uploadError) {
+    console.error("uploadAvatar: upload error", uploadError);
     throw new Error("Error uploading avatar");
   }
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError) {
+  if (userError || !userData?.user) {
+    console.error("uploadAvatar: getUser error", userError);
     throw new Error("Something went wrong, try again.");
   }
 
-  const avatar = userData.user.user_metadata.avatar;
-  if (avatar) {
-    const { error } = await supabase.storage.from("avatars").remove([avatar]);
+  const previousAvatar = userData.user.user_metadata?.avatar;
 
-    if (error) {
-      throw new Error("Something went wrong, try again.");
-    }
-  }
-
-  const { error: dataUpdateError } = await supabase.auth.updateUser({
-    data: {
-      avatar: fileName,
-    },
+  const { error: updateError } = await supabase.auth.updateUser({
+    data: { avatar: fileName },
   });
 
-  if (dataUpdateError) {
+  if (updateError) {
+    console.error("uploadAvatar: updateUser error", updateError);
     throw new Error("Error associating the avatar with the user.");
   }
-}
 
-export async function deleteAvatar() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
+  if (previousAvatar) {
+    const { error: removeError } = await supabase.storage
+      .from("avatars")
+      .remove([previousAvatar]);
 
-  const avatar = data.user?.user_metadata.avatar;
-  if (avatar) {
-    const { error } = await supabase.storage.from("avatars").remove([avatar]);
-
-    if (error) {
-      throw new Error("Something went deleting your avatar.");
+    if (removeError) {
+      console.warn(
+        "uploadAvatar: failed to remove previous avatar",
+        removeError,
+      );
     }
   }
 
-  if (error) {
-    throw new Error("Something went deleting your avatar.");
+  revalidatePath("/settings/avatar");
+}
+
+export async function deleteAvatar(): Promise<void> {
+  const supabase = await createClient();
+  const { data, error: getUserError } = await supabase.auth.getUser();
+
+  if (getUserError || !data?.user) {
+    console.error("deleteAvatar: getUser error", getUserError);
+    throw new Error("Something went wrong while fetching user.");
+  }
+
+  const avatar = data.user.user_metadata?.avatar;
+  if (avatar) {
+    const { error: removeError } = await supabase.storage
+      .from("avatars")
+      .remove([avatar]);
+    if (removeError) {
+      console.error("deleteAvatar: remove error", removeError);
+      throw new Error("Something went wrong deleting your avatar.");
+    }
+  }
+
+  const { error: updateError } = await supabase.auth.updateUser({
+    data: { avatar: null },
+  });
+
+  if (updateError) {
+    console.error("deleteAvatar: updateUser error", updateError);
+    throw new Error("Something went wrong deleting your avatar.");
   }
 
   revalidatePath("/settings/avatar");

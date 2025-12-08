@@ -3,6 +3,7 @@ import RemoveAvatarButton from "@/components/profile/remove-avatar-button";
 import { Input } from "@/components/ui/input";
 import { uploadAvatar } from "@/lib/actions";
 import { createClient } from "@/lib/supabase/server";
+import { safeCreateSignedUrl } from "@/lib/supabase/storage";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 
@@ -11,11 +12,11 @@ export default async function AvatarPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: userAvatar, error } = await supabase.storage
-    .from("avatars")
-    .createSignedUrl(user?.user_metadata.avatar, 60 * 5);
 
-  if (!userAvatar)
+  const avatarPath = user?.user_metadata?.avatar;
+
+  // If there's no avatar path, render the "No Avatar" UI and skip any storage calls
+  if (!avatarPath) {
     return (
       <section className="grid grid-cols-[2fr_1fr] gap-8">
         <div className="col-span-2 max-w-sm space-y-4 lg:col-span-1">
@@ -59,8 +60,20 @@ export default async function AvatarPage() {
         </div>
       </section>
     );
+  }
 
-  if (error) throw new Error("Unable to get User Avatar");
+  // Only call storage when avatarPath exists
+  const { data: userAvatar, error } = await safeCreateSignedUrl(
+    supabase.storage,
+    "avatars",
+    avatarPath,
+    60 * 5,
+  );
+
+  if (error || !userAvatar?.signedUrl) {
+    console.error("Avatar signed url error:", error);
+    throw new Error("Unable to get User Avatar");
+  }
 
   return (
     <section className="grid grid-cols-[2fr_1fr] gap-8">
@@ -98,7 +111,7 @@ export default async function AvatarPage() {
         </p>
         <div className="bg-muted relative flex aspect-square h-40 w-40 items-center justify-center overflow-hidden rounded-md xl:h-50 xl:w-50">
           <Image
-            src={userAvatar?.signedUrl}
+            src={userAvatar.signedUrl}
             alt="Avatar"
             className="object-cover"
             fill
