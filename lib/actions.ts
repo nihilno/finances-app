@@ -93,7 +93,7 @@ export async function login(
     email,
     options: {
       shouldCreateUser: true,
-      emailRedirectTo: encodeURI(`${process.env.APP_URL}/auth/confirm`),
+      emailRedirectTo: `${process.env.APP_URL}/auth/confirm`,
     },
   });
 

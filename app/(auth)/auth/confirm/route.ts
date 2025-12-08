@@ -7,10 +7,9 @@ export async function GET(request: NextRequest) {
   const token = url.searchParams.get("token");
   const type = url.searchParams.get("type") as EmailOtpType | null;
   const email = url.searchParams.get("email");
-  const redirectTo = url.searchParams.get("redirect_to") ?? "/";
 
   if (!token || !type || !email) {
-    return NextResponse.redirect(new URL("/error", request.url));
+    return NextResponse.redirect(new URL("/error", process.env.APP_URL));
   }
 
   try {
@@ -23,13 +22,12 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error("Supabase verifyOtp error:", error);
-      return NextResponse.redirect(new URL("/error", request.url));
+      return NextResponse.redirect(new URL("/error", process.env.APP_URL));
     }
 
-    const redirectUrl = new URL(redirectTo, request.url);
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(new URL("/dashboard", process.env.APP_URL));
   } catch (err) {
     console.error("Unexpected error in confirm handler:", err);
-    return NextResponse.redirect(new URL("/error", request.url));
+    return NextResponse.redirect(new URL("/error", process.env.APP_URL));
   }
 }
